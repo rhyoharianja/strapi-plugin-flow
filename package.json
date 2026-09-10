@@ -1,13 +1,12 @@
 {
   "name": "strapi-plugin-flow",
-  "version": "0.1.0",
-  "description": "Automation flows (flows-as-data engine) for the Strapi Content Hub",
+  "version": "0.2.0",
+  "description": "Automation flows (flows-as-data engine)",
   "author": "Suryo Galih Kencana Harianja <harianja.suryo@gmail.com>",
   "license": "MIT",
   "keywords": [
     "strapi",
     "strapi-plugin",
-    "content-hub",
     "automation",
     "workflow-automation",
     "flow",
@@ -73,7 +72,6 @@
   },
   "peerDependencies": {
     "@strapi/strapi": "^5.52.3",
-    "@strapi/sdk-plugin": "^6.1.1",
     "@strapi/design-system": "^2.2.4",
     "@strapi/icons": "^2.2.4",
     "react-intl": "^6.8.9",
@@ -85,9 +83,9 @@
   },
   "strapi": {
     "kind": "plugin",
-    "name": "content-hub-flow",
+    "name": "flow",
     "displayName": "Flow",
-    "description": "Automation flows (flows-as-data engine) for the Strapi Content Hub"
+    "description": "Automation flows (flows-as-data engine)"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,7 @@
 # strapi-plugin-flow
 
+[![npm](https://img.shields.io/npm/v/strapi-plugin-flow?logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/strapi-plugin-flow) ![license MIT](https://img.shields.io/badge/license-MIT-3DA639) ![Strapi 5](https://img.shields.io/badge/Strapi-5-4945FF?logo=strapi&logoColor=white) ![TypeScript 5.9](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white) ![React 18](https://img.shields.io/badge/React-18-20232A?logo=react&logoColor=white) ![node--cron scheduler](https://img.shields.io/badge/node----cron-scheduler-339933?logo=nodedotjs&logoColor=white)
+
 Automation flows for Strapi 5, in the spirit of Directus Flows: a **trigger**, optional
 **conditions**, and an ordered list of **operations** that pass data down a chain — all
 stored as data, so an automation is created and changed without a deploy.
@@ -8,7 +10,7 @@ Flows are built on a **canvas**: panels you drag, connectors you draw, a trigger
 a list, and a generated form per operation. Nothing with a finite set of answers is typed by
 hand.
 
-Part of [Strapi Content Hub](../../README.md).
+One of a family of standalone Strapi 5 plugins — see [the others](https://github.com/rhyoharianja?tab=repositories).
 
 ## Install
 
@@ -19,9 +21,15 @@ pnpm add strapi-plugin-flow
 ```ts
 // config/plugins.ts
 export default {
-  'content-hub-flow': { enabled: true, resolve: 'strapi-plugin-flow' },
+  'flow': { enabled: true, resolve: 'strapi-plugin-flow' },
 };
 ```
+
+> **Keep the key `flow` exactly as it is.** It is the plugin id, and the id is
+> compiled into the package — the admin menu link, the `plugin::flow.*`
+> custom-field uids, the route prefix and every internal `strapi.plugin(...)` lookup.
+> Renaming it does not rename those, so the plugin half-loads and fails in ways that do
+> not look like a naming problem. `resolve` points at the package; the key does not.
 
 ## The canvas
 
@@ -90,7 +98,7 @@ An operation contributed by another plugin should be no harder to configure than
 one, so `register()` takes field descriptors alongside the handler:
 
 ```ts
-strapi.plugin('content-hub-flow').service('registry').register({
+strapi.plugin('flow').service('registry').register({
   type: 'mkt.push',
   label: 'Push to Marketing Automation',
   group: 'Integration',
@@ -187,7 +195,7 @@ was touched.
 | Trigger | Fires when |
 | ------- | ---------- |
 | `entry.create` / `entry.update` / `entry.publish` / `entry.unpublish` | The matching document-service action runs |
-| `stage.changed` | The [content-workflow](../strapi-plugin-content-workflow/README.md) plugin moves an entry |
+| `stage.changed` | The [content-workflow](https://github.com/rhyoharianja/strapi-plugin-workflow) plugin moves an entry |
 | `cron` | `triggerConfig.cron` fires (in-process, node-cron) |
 | `manual` | Someone presses **Run** in the admin, or calls the run endpoint |
 | `webhook` | Reserved — the endpoint is not exposed yet |
@@ -244,7 +252,7 @@ A failing step follows its `reject` edge if it has one, and otherwise ends the r
 
 ```ts
 // in your plugin's register() phase
-strapi.plugin('content-hub-flow').service('registry').register({
+strapi.plugin('flow').service('registry').register({
   type: 'mkt.push',
   label: 'Push to Marketing Automation',
   description: 'Send a governed creative to the MA tool',
@@ -313,13 +321,13 @@ be wrong is visible only as a line drawn through a panel.
 
 | Method | Route | Purpose |
 | ------ | ----- | ------- |
-| GET | `/content-hub-flow/flows` | List flows |
-| POST | `/content-hub-flow/flows` | Create |
-| PUT | `/content-hub-flow/flows/:id` | Update (reschedules cron) |
-| DELETE | `/content-hub-flow/flows/:id` | Delete |
-| POST | `/content-hub-flow/flows/:id/run` | Run manually; optional `{ uid, documentId }` target |
-| GET | `/content-hub-flow/steps` | Registered operations, including other plugins' |
-| GET | `/content-hub-flow/runs` | Recent runs |
+| GET | `/flow/flows` | List flows |
+| POST | `/flow/flows` | Create |
+| PUT | `/flow/flows/:id` | Update (reschedules cron) |
+| DELETE | `/flow/flows/:id` | Delete |
+| POST | `/flow/flows/:id/run` | Run manually; optional `{ uid, documentId }` target |
+| GET | `/flow/steps` | Registered operations, including other plugins' |
+| GET | `/flow/runs` | Recent runs |
 
 ## Run log
 

@@ -72,7 +72,7 @@ export class FlowHalt extends Error {
 const MAX_STEPS_PER_RUN = 200;
 
 const engine = ({ strapi }: { strapi: Core.Strapi }) => {
-  const registry = () => strapi.plugin('content-hub-flow').service('registry');
+  const registry = () => strapi.plugin('flow').service('registry');
 
   return {
     /**
@@ -287,7 +287,7 @@ const engine = ({ strapi }: { strapi: Core.Strapi }) => {
       extra?: Record<string, unknown>;
     }): Promise<void> {
       const flows: FlowDTO[] = await strapi
-        .plugin('content-hub-flow')
+        .plugin('flow')
         .service('flow')
         .findByTrigger(params.trigger, params.uid);
 
@@ -317,7 +317,7 @@ const engine = ({ strapi }: { strapi: Core.Strapi }) => {
         } catch (runError) {
           // `run` records its own failures; this only guards the loop itself.
           strapi.log.error(
-            `[content-hub-flow] flow "${flow.name}" crashed: ${(runError as Error).message}`
+            `[flow] flow "${flow.name}" crashed: ${(runError as Error).message}`
           );
         }
       }

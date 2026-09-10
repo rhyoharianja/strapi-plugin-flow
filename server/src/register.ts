@@ -11,13 +11,13 @@ import { builtInSteps } from './steps';
  * operations from their own `register()` phase for the same reason.
  */
 const register = ({ strapi }: { strapi: Core.Strapi }) => {
-  const registry = strapi.plugin('content-hub-flow').service('registry');
+  const registry = strapi.plugin('flow').service('registry');
 
   for (const step of builtInSteps(strapi)) {
     registry.register(step);
   }
 
-  strapi.log.info(`[content-hub-flow] registered ${registry.list().length} built-in step(s)`);
+  strapi.log.info(`[flow] registered ${registry.list().length} built-in step(s)`);
 };
 
 export default register;

@@ -11,7 +11,7 @@ const DOCUMENT_ACTIONS: Record<string, Trigger> = {
 };
 
 const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
-  const engine = strapi.plugin('content-hub-flow').service('engine');
+  const engine = strapi.plugin('flow').service('engine');
 
   /**
    * One global document-service middleware feeds every content event into the engine.
@@ -25,7 +25,7 @@ const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
 
     const trigger = DOCUMENT_ACTIONS[context.action];
     // Ignore the plugin's own bookkeeping, or a flow run would trigger more flows.
-    if (!trigger || context.uid.startsWith('plugin::content-hub-flow')) {
+    if (!trigger || context.uid.startsWith('plugin::flow')) {
       return result;
     }
 
@@ -41,7 +41,7 @@ const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
         entry: entry ?? undefined,
       })
       .catch((error: Error) =>
-        strapi.log.error(`[content-hub-flow] ${trigger} dispatch failed: ${error.message}`)
+        strapi.log.error(`[flow] ${trigger} dispatch failed: ${error.message}`)
       );
 
     return result;
@@ -53,7 +53,7 @@ const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
    * The dependency is one-way and optional: the flow engine works without the workflow
    * plugin, and the workflow plugin has never heard of flows.
    */
-  const workflow = strapi.plugin('content-hub-workflow');
+  const workflow = strapi.plugin('workflow');
 
   if (workflow) {
     workflow.service('events').on((payload: Record<string, unknown>) => {
@@ -65,14 +65,14 @@ const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
           extra: payload,
         })
         .catch((error: Error) =>
-          strapi.log.error(`[content-hub-flow] stage.changed dispatch failed: ${error.message}`)
+          strapi.log.error(`[flow] stage.changed dispatch failed: ${error.message}`)
         );
     });
 
-    strapi.log.info('[content-hub-flow] subscribed to content-workflow.stage.changed');
+    strapi.log.info('[flow] subscribed to content-workflow.stage.changed');
   }
 
-  await strapi.plugin('content-hub-flow').service('scheduler').reload();
+  await strapi.plugin('flow').service('scheduler').reload();
 };
 
 export default bootstrap;

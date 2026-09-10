@@ -3,14 +3,14 @@ import type { StepGraph } from './diagram/graph';
 
 /**
  * Contract shared by this plugin's server and admin bundles, and by any plugin that
- * registers its own operations (Tahap 6 and 7 do).
+ * registers its own operations (the workflow and channels plugins do).
  */
 
-export const PLUGIN_ID = 'content-hub-flow' as const;
+export const PLUGIN_ID = 'flow' as const;
 
 export const UID = {
-  flow: 'plugin::content-hub-flow.flow',
-  flowRun: 'plugin::content-hub-flow.flow-run',
+  flow: 'plugin::flow.flow',
+  flowRun: 'plugin::flow.flow-run',
 } as const;
 
 /** What starts a flow. */

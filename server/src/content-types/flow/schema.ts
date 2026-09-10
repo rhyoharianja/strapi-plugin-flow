@@ -9,7 +9,7 @@
  */
 export default {
   kind: 'collectionType',
-  collectionName: 'content_hub_flows',
+  collectionName: 'flow_flows',
   info: {
     singularName: 'flow',
     pluralName: 'flows',

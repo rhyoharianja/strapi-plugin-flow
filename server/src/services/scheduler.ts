@@ -34,7 +34,7 @@ const scheduler = ({ strapi }: { strapi: Core.Strapi }) => {
       stopAll();
 
       const flows: FlowDTO[] = await strapi
-        .plugin('content-hub-flow')
+        .plugin('flow')
         .service('flow')
         .findByTrigger('cron');
 
@@ -42,32 +42,32 @@ const scheduler = ({ strapi }: { strapi: Core.Strapi }) => {
         const expression = flow.triggerConfig.cron;
 
         if (!expression) {
-          strapi.log.warn(`[content-hub-flow] cron flow "${flow.name}" has no cron expression`);
+          strapi.log.warn(`[flow] cron flow "${flow.name}" has no cron expression`);
           continue;
         }
 
         if (!cron.validate(expression)) {
           // A bad expression must not take the scheduler down with it.
           strapi.log.error(
-            `[content-hub-flow] invalid cron expression "${expression}" on flow "${flow.name}"`
+            `[flow] invalid cron expression "${expression}" on flow "${flow.name}"`
           );
           continue;
         }
 
         const job = cron.schedule(expression, () => {
           void strapi
-            .plugin('content-hub-flow')
+            .plugin('flow')
             .service('engine')
             .dispatchCron(flow)
             .catch((error: Error) =>
-              strapi.log.error(`[content-hub-flow] cron flow "${flow.name}": ${error.message}`)
+              strapi.log.error(`[flow] cron flow "${flow.name}": ${error.message}`)
             );
         });
 
         jobs.set(flow.documentId, job);
       }
 
-      strapi.log.info(`[content-hub-flow] scheduled ${jobs.size} cron flow(s)`);
+      strapi.log.info(`[flow] scheduled ${jobs.size} cron flow(s)`);
       return jobs.size;
     },
 

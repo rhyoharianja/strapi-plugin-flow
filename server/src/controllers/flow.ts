@@ -14,7 +14,7 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => {
    * builder simply offers no stage choices.
    */
   const stageOptions = async (): Promise<Array<{ label: string; value: string }>> => {
-    const workflow = strapi.plugin('content-hub-workflow');
+    const workflow = strapi.plugin('workflow');
     if (!workflow) return [];
 
     try {
@@ -33,9 +33,9 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => {
     }
   };
 
-  const flows = () => strapi.plugin('content-hub-flow').service('flow');
-  const engine = () => strapi.plugin('content-hub-flow').service('engine');
-  const scheduler = () => strapi.plugin('content-hub-flow').service('scheduler');
+  const flows = () => strapi.plugin('flow').service('flow');
+  const engine = () => strapi.plugin('flow').service('engine');
+  const scheduler = () => strapi.plugin('flow').service('scheduler');
 
   /** Cron schedules are rebuilt after any change so GUI edits take effect immediately. */
   const rescheduleIfCron = async (flow: FlowDTO): Promise<void> => {
@@ -49,7 +49,7 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => {
 
     /** Operations available to build flows from, including ones other plugins added. */
     async steps(ctx): Promise<void> {
-      ctx.body = { data: strapi.plugin('content-hub-flow').service('registry').list() };
+      ctx.body = { data: strapi.plugin('flow').service('registry').list() };
     },
 
     /**

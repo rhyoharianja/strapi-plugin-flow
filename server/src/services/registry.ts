@@ -8,7 +8,7 @@ import type { StepDefinition, StepHandler } from '../../../shared/flow';
  * This is the extension point other plugins use — a channel plugin registers a delivery
  * operation, a marketing plugin registers `mkt.push`, and so on:
  *
- *   strapi.plugin('content-hub-flow').service('registry').register({
+ *   strapi.plugin('flow').service('registry').register({
  *     type: 'mkt.push',
  *     label: 'Push to Marketing Automation',
  *     handler: async (ctx, config) => { ... },
@@ -26,7 +26,7 @@ const registry = ({ strapi }: { strapi: Core.Strapi }) => {
       if (steps.has(definition.type)) {
         // Overwriting silently would make a step's behaviour depend on plugin load order.
         strapi.log.warn(
-          `[content-hub-flow] step "${definition.type}" is already registered; ignoring the duplicate`
+          `[flow] step "${definition.type}" is already registered; ignoring the duplicate`
         );
         return;
       }

@@ -6,7 +6,7 @@
  */
 export default {
   kind: 'collectionType',
-  collectionName: 'content_hub_flow_runs',
+  collectionName: 'flow_runs',
   info: {
     singularName: 'flow-run',
     pluralName: 'flow-runs',
@@ -29,7 +29,7 @@ export default {
     flow: {
       type: 'relation',
       relation: 'oneToOne',
-      target: 'plugin::content-hub-flow.flow',
+      target: 'plugin::flow.flow',
     },
     flowName: { type: 'string', required: true },
     status: {

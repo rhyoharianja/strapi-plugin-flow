@@ -24,7 +24,7 @@ import type { Core } from '@strapi/strapi';
  * `destroy()` rather than `stop()` so the tasks also leave node-cron's module registry.
  */
 const destroy = ({ strapi }: { strapi: Core.Strapi }) => {
-  strapi.plugin('content-hub-flow').service('scheduler').stopAll();
+  strapi.plugin('flow').service('scheduler').stopAll();
 };
 
 export default destroy;

@@ -1,1 +1,1 @@
-export const PLUGIN_ID = "content-hub-flow";
+export const PLUGIN_ID = "flow";
