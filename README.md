@@ -2,6 +2,8 @@
 
 [![npm](https://img.shields.io/npm/v/strapi-plugin-flow?logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/strapi-plugin-flow) ![license MIT](https://img.shields.io/badge/license-MIT-3DA639) ![Strapi 5](https://img.shields.io/badge/Strapi-5-4945FF?logo=strapi&logoColor=white) ![TypeScript 5.9](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white) ![React 18](https://img.shields.io/badge/React-18-20232A?logo=react&logoColor=white) ![node--cron scheduler](https://img.shields.io/badge/node----cron-scheduler-339933?logo=nodedotjs&logoColor=white)
 
+[![PayPal](https://img.shields.io/badge/PayPal-donate-00457C?logo=paypal&logoColor=white)](https://www.paypal.com/paypalme/sgkharianja) [![Saweria](https://img.shields.io/badge/Saweria-dukung-FF5C5C?logo=buymeacoffee&logoColor=white)](https://saweria.co/rhioharianja)
+
 Automation flows for Strapi 5, in the spirit of Directus Flows: a **trigger**, optional
 **conditions**, and an ordered list of **operations** that pass data down a chain — all
 stored as data, so an automation is created and changed without a deploy.
